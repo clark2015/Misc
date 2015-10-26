@@ -1,0 +1,1 @@
+#include "../mmorpg/typedef.h"
