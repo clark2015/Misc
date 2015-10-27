@@ -36,7 +36,6 @@
 -define(terminate_evt(EvtID),   {'@terminate_evt@', EvtID}).
 -define(code_change_evt(EvtID), {'@code_change_evt@', EvtID}).
 
-
 start_link({Name, Mod, Args}) ->
     gen_server:start_link({local, Name}, ?MODULE, [Mod, Args], []).
 

@@ -17,9 +17,8 @@ start_link() ->
 -define(CHILD(Mod, Type, Args), {Mod, {Mod, start_link, Args},
     permanent, 2000, Type, [Mod]}).
 
--define(CHILD_WORKER(Mod, Args), {Mod, {Mod, start_link, Args},
+-define(CHILD_WORKER(ProcessMod, Name, Mod, Args), {Name, {ProcessMod, start_link, [{Name, Mod, Args}]},
     permanent, 2000, worker, [Mod]}).
-
 
 
 
@@ -48,7 +47,8 @@ init([]) ->
                 , ?CHILD(sky_service, worker, [])           %天空之城公共数据
                 , ?CHILD(title_service, worker, [])         %维护公共称号
                 , ?CHILD(player_log_service, worker, [])    %玩家进程crash日志存储
-                , ?CHILD_WORKER(event_server, [{system_log,system_log,[]}])            %玩家进程crash日志存储
+                , ?CHILD_WORKER(event_server, system_log, system_log, [])            %玩家进程crash日志存储
+                , ?CHILD_WORKER(event_server, info_log, info_log, [])            %玩家进程crash日志存储
             ]
         }
     }.
